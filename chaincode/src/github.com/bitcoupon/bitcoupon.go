@@ -56,7 +56,7 @@ Golang 语法
 import (
 	"fmt"//标准的输出输入
 	"strconv"//实现基本的数据类型与string类型的转换
-
+			//czf 包strconv主要实现对字符串和基本数据类型之间的转换。
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
@@ -80,6 +80,8 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	GetFunctionAndParameters()函数返回两部分第一部分是函数，第二部分是参数
 	_变量代表方法名，args是接受的参数
 	*/
+	//czf _ 用于占位，接收函数GetFunctionAndParameters返回的函数
+	//czf args要怎么找他的元素？？
 	_, args := stub.GetFunctionAndParameters()
 	var AC, CA,EA,NA,SA,SHA,SIA,WA,XA string    // 9 Entities
 	var ACval, CAval,EAval,NAval,SAval,SHAval,SIAval,WAval,XAval int // 9 Asset holdings
@@ -92,6 +94,8 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	// Initialize the chaincode
 	AC = args[0]
 	ACval, err = strconv.Atoi(args[1])
+	//czf 字符串转int：Atoi()
+
 	if err != nil {
 		return shim.Error("Expecting integer value for asset holding")
 	}
@@ -141,6 +145,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 
 	// Write the state to the ledger
 	err = stub.PutState(AC, []byte(strconv.Itoa(ACval)))
+	//czf int转字符串: Itoa()
 	if err != nil {
 		return shim.Error(err.Error())
 	}
